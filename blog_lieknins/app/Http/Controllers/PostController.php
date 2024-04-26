@@ -13,7 +13,8 @@ class PostController extends Controller
         return view("posts.index", ["posts" => $posts]);
     }
 
-    public function show($id) {
+    public function show($id)
+    {
         $post = Post::find($id);
         if (isset($post)) {
             return view("posts.show", ["post" => $post]);
@@ -21,5 +22,25 @@ class PostController extends Controller
 
         return redirect("/");
         
+    }
+
+    public function create()
+    {
+        $posts = Post::all();
+        return view("posts.create", ["posts" => $posts]);
+    }
+
+    public function store(Request $request)
+    {
+        $post = new Post();
+        $post->title = $request->title;
+        $post->category_id = $request->category_id;
+        $post->save();
+
+        return redirect("/");
+
+        // dd($request);
+
+
     }
 }
